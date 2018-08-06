@@ -117,15 +117,24 @@ class SignaturePad extends Component {
 
   };
 
+  onMessage = (event) => {
+    var base64DataUrl = JSON.parse(event.nativeEvent.data);
+    this._bridged_finishedStroke(base64DataUrl);
+  }
+ 
   render = () => {
     return (
-        <WebView automaticallyAdjustContentInsets={false}
-                 onNavigationStateChange={this._onNavigationChange}
-                 renderError={this._renderError}
-                 renderLoading={this._renderLoading}
-                 source={this.source}
-                 javaScriptEnabled={true}
-                 style={this.props.style}/>
+        <WebView 
+          automaticallyAdjustContentInsets={false}
+          onNavigationStateChange={this._onNavigationChange}
+          onMessage={this.onMessage}
+          renderError={this._renderError}
+          renderLoading={this._renderLoading}
+          source={this.source}
+          javaScriptEnabled={true}
+          style={this.props.style}
+          originWhitelist={['*']}
+        />
     )
   };
 }
